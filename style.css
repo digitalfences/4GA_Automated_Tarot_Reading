@@ -1,0 +1,11 @@
+*{
+    box-sizing: border-box;
+    border: 1px solid black;
+}
+.cross{
+    display:grid;
+}
+.line{
+    display: flex;
+    flex-direction: column;
+}
