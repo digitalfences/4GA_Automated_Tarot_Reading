@@ -35,7 +35,7 @@ card.meaning_rev = meaning in the reversed position
 card.desc = a description of the card, usually in great detail
 
 */
-let url = "https://rws-cards-api.herokuapp.com/api/v1/";
+let url = "https://rws-cards-api.herokuapp.com/api/v1/cards";
 
 /*
 The structural html pieces we need to access
@@ -72,20 +72,12 @@ class TarotCard{
         this.orientation = Math.floor(Math.random()*2);
     }
 }
-async function getCardData(i){
-    let url = "https://rws-cards-api.herokuapp.com/api/v1/";
-    const response = await fetch(url)
-    const res = await response.json();
-    const cards = res.cards;
-
-    let card = new TarotCard(cards[i].name,cards[i].meaning_up, cards[i].meaning_rev, cards[i].desc, cards[i].name_short);
-    return card;
-}
+//return new TarotCard(cards[i].name,cards[i].meaning_up, cards[i].meaning_rev, cards[i].desc, cards[i].name_short);
 
 class TarotDeck{
     constructor(){
         this.deck =[];
-        this.makeDeck();
+        this.fatedCards =[];
     }
     /* The Fisher Yates shuffle algorithm as explained here
     https://www.frankmitchell.org/2015/01/fisher-yates/ */
@@ -100,10 +92,23 @@ class TarotDeck{
         
         }
     }
-    makeDeck(){
-        for(let i = 0; i < 78; i++){
-            this.deck.push(getCardData(i));
-        }
+    async makeDeck(){
+        let card;
+        let cards;
+        fetch(url)
+        .then(res=>res.json())
+        .then(res=>{
+            cards = res.cards;
+            for(let i = 0; i < cards.length; i++){
+                card = new TarotCard(cards[i].name,cards[i].meaning_up, cards[i].meaning_rev, cards[i].desc, cards[i].name_short);
+                this.deck.push(card);
+            }
+        })
+        .then(res => {
+            this.fatedCards.push(...this.augury());
+        })
+        
+        
     }
     /*
     A celtic cross takes 10 cards
@@ -119,7 +124,8 @@ class TarotDeck{
 
 }
 let myDeck = new TarotDeck();
-let fatedCards = myDeck.augury();
+myDeck.makeDeck();
+console.log(myDeck.fatedCards);
 readingButton.addEventListener('click', start);
 function start(){
     console.log(fatedCardArray);
