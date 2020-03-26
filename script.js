@@ -157,14 +157,22 @@ readingButton.addEventListener('click', start);
 function start(){
     let results = "";
     for (let i = 0; i < myDeck.fatedCards.length;i++){
-        fatedCardArray[i].setAttribute('src',myDeck.fatedCards[i].imgPath);
+        let currentCard = myDeck.fatedCards[i]
+        let cardIcon = fatedCardArray[i]
+        if(currentCard.orientation == 0){
+            cardIcon.style.transform = "rotate(180deg)";
+        }
+        else{
+            cardIcon.style.transform = "rotate(0deg)";
+        }
+        cardIcon.setAttribute('src',currentCard.imgPath);
     }
-    results = "
+    results = "";
     
     
     
     
-    "
+    
 
 }
 
