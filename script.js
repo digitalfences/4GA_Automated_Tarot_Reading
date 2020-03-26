@@ -114,6 +114,9 @@ class TarotDeck{
             }
         })
         .then(res => {
+            this.deck[18].main = "Material happiness, fortunate marriage, contentment."
+            this.deck[35].main = "Love, passion, friendship, affinity, union, concord, sympathy, the interrelation of the sexes, and--as a suggestion apart from all offices of divination--that desire which is not in Nature, but by which Nature is sanctified."
+            this.deck
             this.fatedCards.push(...this.augury());
         })
         
