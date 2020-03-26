@@ -60,4 +60,11 @@ body{
 .reading{
     grid-row: 3;
     grid-column: 1/span 2;
+    height: 100%;
+    width: 100%;
+}
+.card{
+    margin-top: 10px;
+    height: 150px;
+    width: 75px;
 }

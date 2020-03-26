@@ -36,6 +36,7 @@ card.desc = a description of the card, usually in great detail
 
 */
 let url = "https://rws-cards-api.herokuapp.com/api/v1/";
+
 /*
 The structural html pieces we need to access
 */
@@ -49,20 +50,17 @@ let outsideInfluence = document.querySelector(".outside-influence");
 let insideInfluence = document.querySelector(".internal-influence");
 let hopesAndFears = document.querySelector(".hopes-and-fears");
 let longTermOutcome = document.querySelector(".long-term-outcome");
+let fatedCardArray = document.querySelectorAll(".card");
+let readingButton = document.querySelector("#start");
+
+
 
 /*
 The internal data structures I will use to store the information on the cards
 */
 
 
-async function getCardData(i){
-    let url = "https://rws-cards-api.herokuapp.com/api/v1/";
-    const response = await fetch(url)
-    const res = await response.json();
-    const cards = res.cards;
-    let card = new TarotCard(cards[i].name,cards[i].meaning_up, cards[i].meaning_rev, cards[i].desc, cards[i].name_short);
-    return card;
-}
+
 
 class TarotCard{
     constructor(name, meaningUp, meaningDown,desc,imgPath){
@@ -70,15 +68,24 @@ class TarotCard{
         this.meaningUp = meaningUp;
         this.meaningDown = meaningDown;
         this.desc = desc;
-        this.imgPath = "./img/"+imgPath+".jpg";
+        this.imgPath = "img/"+imgPath+".jpg";
+        this.orientation = Math.floor(Math.random()*2);
     }
+}
+async function getCardData(i){
+    let url = "https://rws-cards-api.herokuapp.com/api/v1/";
+    const response = await fetch(url)
+    const res = await response.json();
+    const cards = res.cards;
+
+    let card = new TarotCard(cards[i].name,cards[i].meaning_up, cards[i].meaning_rev, cards[i].desc, cards[i].name_short);
+    return card;
 }
 
 class TarotDeck{
     constructor(){
         this.deck =[];
         this.makeDeck();
-        console.log(this.deck);
     }
     /* The Fisher Yates shuffle algorithm as explained here
     https://www.frankmitchell.org/2015/01/fisher-yates/ */
@@ -98,6 +105,26 @@ class TarotDeck{
             this.deck.push(getCardData(i));
         }
     }
+    /*
+    A celtic cross takes 10 cards
+    */
+    augury(){
+        let deal = [];
+        this.shuffleDeck();
+        for (let i =0; i < 10; i++){
+            deal.push(this.deck.pop());
+        }
+        return deal;
+    }
+
+}
+let myDeck = new TarotDeck();
+let fatedCards = myDeck.augury();
+readingButton.addEventListener('click', start);
+function start(){
+    console.log(fatedCardArray);
+    for (let i = 0; i < fatedCards.length;i++){
+        fatedCardArray[i].setAttribute('src',fatedCards[i].imgPath);
+    }
 }
 
-myDeck = new TarotDeck();
