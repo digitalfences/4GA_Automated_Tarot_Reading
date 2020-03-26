@@ -129,8 +129,8 @@ console.log(myDeck.fatedCards);
 readingButton.addEventListener('click', start);
 function start(){
     console.log(fatedCardArray);
-    for (let i = 0; i < fatedCards.length;i++){
-        fatedCardArray[i].setAttribute('src',fatedCards[i].imgPath);
+    for (let i = 0; i < myDeck.fatedCards.length;i++){
+        fatedCardArray[i].setAttribute('src',myDeck.fatedCards[i].imgPath);
     }
 }
 
