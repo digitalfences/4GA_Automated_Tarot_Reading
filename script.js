@@ -52,7 +52,7 @@ let hopesAndFears = document.querySelector(".hopes-and-fears");
 let longTermOutcome = document.querySelector(".long-term-outcome");
 let fatedCardArray = document.querySelectorAll(".card");
 let readingButton = document.querySelector("#start");
-let results = document.querySelector('.results');
+
 
 
 
@@ -70,7 +70,15 @@ class TarotCard{
         this.meaningDown = meaningDown;
         this.desc = desc;
         this.imgPath = "img/"+imgPath+".jpg";
-        this.orientation = Math.floor(Math.random()*2);
+        let oriInt = Math.floor(Math.random()*2);
+        if (oriInt == 0){
+            this.orientation = "reversed";
+            this.main = meaningDown;
+        }
+        else{
+            this.orientation = "upright";
+            this.main = meaningUp
+        }
     }
 }
 //return new TarotCard(cards[i].name,cards[i].meaning_up, cards[i].meaning_rev, cards[i].desc, cards[i].name_short);
@@ -126,40 +134,39 @@ class TarotDeck{
 }
 let myDeck = new TarotDeck();
 myDeck.makeDeck();
-console.log(myDeck.fatedCards);
 readingButton.addEventListener('click', start);
 /* 
 <h1>Your Results</h1>: 
 <h2>The Querent: </h2>
-<p>This card represents you. It's possible meanings ${orientation} are: </p>
+<p>This card represents you. It's possible meanings ${myDeck.fatedCards[0].orientation} are: </p>
 <h2>The Situation: </h2>
-<p>This card represents the situation itself. It's possible meanings ${orientation} are: </p>
+<p>This card represents the situation itself. It's possible meanings ${myDeck.fatedCards[0].orientation} are: </p>
 <h2>The Foundation: </h2>
-<p>This card represents the context around you. It's possible meanings ${orientation} are:</p>
+<p>This card represents the context around you. It's possible meanings ${myDeck.fatedCards[0].orientation} are:</p>
 <h2>The Past: </h2>
-<p>This card represents the events that have occurred recently. It's possible meanings ${orientation} are:</p>
+<p>This card represents the events that have occurred recently. It's possible meanings ${myDeck.fatedCards[0].orientation} are:</p>
 <h2>The Short Term Outlook: </h2>
-<p>This card represents what will soon unfold. It's possible meanings ${orientation} are:</p>
+<p>This card represents what will soon unfold. It's possible meanings ${myDeck.fatedCards[0].orientation} are:</p>
 <h2>The Present Problem: <h2>
-<p>This card represents the difficulties you face. It's possible meanings ${orientation} are:</p>
+<p>This card represents the difficulties you face. It's possible meanings ${myDeck.fatedCards[0].orientation} are:</p>
 <h2>Outside Influence: </h2>
-<p>This card represents the influence of outside forces. It's possible meanings ${orientation} are:</p>
+<p>This card represents the influence of outside forces. It's possible meanings ${myDeck.fatedCards[0].orientation} are:</p>
 <h2>Internal Influence: </h2>
-<p>This card represents the influence of your own thinking. It's possible meanings ${orientation} are:</p>
+<p>This card represents the influence of your own thinking. It's possible meanings ${myDeck.fatedCards[0].orientation} are:</p>
 <h2>Hopes And Fears: </h2>
-<p>This card represents your hopes and fears for the situation. It's possible meanings ${orientation} are:</p>
+<p>This card represents your hopes and fears for the situation. It's possible meanings ${myDeck.fatedCards[0].orientation} are:</p>
 <h2>The Long Term Outlook: </h2>
-<p>This card represents the long arc the situation will take. It's possible meanings ${orientation} are:</p>
+<p>This card represents the long arc the situation will take. It's possible meanings ${myDeck.fatedCards[0].orientation} are:</p>
 
 */
 
 
 function start(){
-    let results = "";
+    let results = document.querySelector('.content');
     for (let i = 0; i < myDeck.fatedCards.length;i++){
         let currentCard = myDeck.fatedCards[i]
         let cardIcon = fatedCardArray[i]
-        if(currentCard.orientation == 0){
+        if(currentCard.orientation == "reversed"){
             cardIcon.style.transform = "rotate(180deg)";
         }
         else{
@@ -167,12 +174,29 @@ function start(){
         }
         cardIcon.setAttribute('src',currentCard.imgPath);
     }
-    results = "";
-    
-    
-    
-    
-    
+    results.innerHTML = `
+        <h1>Your Results</h1> 
+        <h2>The Querent: ${myDeck.fatedCards[0].name}</h2>
+        <p>This card represents you. It's possible meanings ${myDeck.fatedCards[0].orientation} are: ${myDeck.fatedCards[0].main}</p>
+        <h2>The Situation: ${myDeck.fatedCards[1].name}</h2>
+        <p>This card represents the situation itself. It's possible meanings ${myDeck.fatedCards[1].orientation} are: ${myDeck.fatedCards[1].main}</p>
+        <h2>The Foundation: ${myDeck.fatedCards[2].name}</h2>
+        <p>This card represents the context around you. It's possible meanings ${myDeck.fatedCards[2].orientation} are: ${myDeck.fatedCards[2].main}</p>
+        <h2>The Past: ${myDeck.fatedCards[3].name}</h2>
+        <p>This card represents the events that have occurred recently. It's possible meanings ${myDeck.fatedCards[3].orientation} are: ${myDeck.fatedCards[3].main}</p>
+        <h2>The Short Term Outlook: ${myDeck.fatedCards[4].name}</h2>
+        <p>This card represents what will soon unfold. It's possible meanings ${myDeck.fatedCards[4].orientation} are: ${myDeck.fatedCards[4].main}</p>
+        <h2>The Present Problem: ${myDeck.fatedCards[5].name}</h2>
+        <p>This card represents the difficulties you face. It's possible meanings ${myDeck.fatedCards[5].orientation} are: ${myDeck.fatedCards[5].main}</p>
+        <h2>Outside Influence: ${myDeck.fatedCards[6].name}</h2>
+        <p>This card represents the influence of outside forces. It's possible meanings ${myDeck.fatedCards[6].orientation} are: ${myDeck.fatedCards[6].main}</p>
+        <h2>Internal Influence: ${myDeck.fatedCards[7].name}</h2>
+        <p>This card represents the influence of your own thinking. It's possible meanings ${myDeck.fatedCards[7].orientation} are: ${myDeck.fatedCards[7].main}</p>
+        <h2>Hopes And Fears: ${myDeck.fatedCards[8].name}</h2>
+        <p>This card represents your hopes and fears for the situation. It's possible meanings ${myDeck.fatedCards[8].orientation} are: ${myDeck.fatedCards[8].main}</p>
+        <h2>The Long Term Outlook: ${myDeck.fatedCards[9].name}</h2>
+        <p>This card represents the long arc the situation will take. It's possible meanings ${myDeck.fatedCards[9].orientation} are: ${myDeck.fatedCards[9].main}</p>
+    ` 
 
 }
 
