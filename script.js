@@ -52,6 +52,7 @@ let hopesAndFears = document.querySelector(".hopes-and-fears");
 let longTermOutcome = document.querySelector(".long-term-outcome");
 let fatedCardArray = document.querySelectorAll(".card");
 let readingButton = document.querySelector("#start");
+let results = document.querySelector('.results');
 
 
 
@@ -127,10 +128,43 @@ let myDeck = new TarotDeck();
 myDeck.makeDeck();
 console.log(myDeck.fatedCards);
 readingButton.addEventListener('click', start);
+/* 
+<h1>Your Results</h1>: 
+<h2>The Querent: </h2>
+<p>This card represents you. It's possible meanings ${orientation} are: </p>
+<h2>The Situation: </h2>
+<p>This card represents the situation itself. It's possible meanings ${orientation} are: </p>
+<h2>The Foundation: </h2>
+<p>This card represents the context around you. It's possible meanings ${orientation} are:</p>
+<h2>The Past: </h2>
+<p>This card represents the events that have occurred recently. It's possible meanings ${orientation} are:</p>
+<h2>The Short Term Outlook: </h2>
+<p>This card represents what will soon unfold. It's possible meanings ${orientation} are:</p>
+<h2>The Present Problem: <h2>
+<p>This card represents the difficulties you face. It's possible meanings ${orientation} are:</p>
+<h2>Outside Influence: </h2>
+<p>This card represents the influence of outside forces. It's possible meanings ${orientation} are:</p>
+<h2>Internal Influence: </h2>
+<p>This card represents the influence of your own thinking. It's possible meanings ${orientation} are:</p>
+<h2>Hopes And Fears: </h2>
+<p>This card represents your hopes and fears for the situation. It's possible meanings ${orientation} are:</p>
+<h2>The Long Term Outlook: </h2>
+<p>This card represents the long arc the situation will take. It's possible meanings ${orientation} are:</p>
+
+*/
+
+
 function start(){
-    console.log(fatedCardArray);
+    let results = "";
     for (let i = 0; i < myDeck.fatedCards.length;i++){
         fatedCardArray[i].setAttribute('src',myDeck.fatedCards[i].imgPath);
     }
+    results = "
+    
+    
+    
+    
+    "
+
 }
 
