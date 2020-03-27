@@ -893,6 +893,7 @@ let hopesAndFears = document.querySelector(".hopes-and-fears");
 let longTermOutcome = document.querySelector(".long-term-outcome");
 let fatedCardArray = document.querySelectorAll(".card");
 let readingButton = document.querySelector("#start");
+let resetButton = document.querySelector("#reset");
 
 /*
 The internal data structures I will use to store the information on the cards
@@ -962,6 +963,7 @@ class TarotDeck{
 let myDeck = new TarotDeck();
 myDeck.makeDeck();
 readingButton.addEventListener('click', start);
+resetButton.addEventListener('click', reset);
 /* 
 <h1>Your Results</h1>: 
 <h2>The Querent: </h2>
@@ -987,7 +989,17 @@ readingButton.addEventListener('click', start);
 
 */
 
+function reset(){
+  myDeck = new TarotDeck();
+  myDeck.makeDeck();
+  let results = document.querySelector('.content');
+  let fatedCardArray = document.querySelectorAll(".card");
+  for (let i = 0; i < fatedCardArray.length;i++){
+    fatedCardArray[i].setAttribute('src','img/Tarot_Card_-_the_Symbol_of_Baphomet.jpg');
+  }
+  results.innerHTML = "<h1>Your Results</h1>";
 
+}
 function start(){
     let results = document.querySelector('.content');
     for (let i = 0; i < myDeck.fatedCards.length;i++){
@@ -995,11 +1007,25 @@ function start(){
         let cardIcon = fatedCardArray[i]
         if(currentCard.orientation == "reversed"){
             cardIcon.style.transform = "rotate(180deg)";
+            if(currentCard ==myDeck.fatedCards[1]){
+              cardIcon.style.transform ="rotate(90deg) translateY(20px)";
+            }
+            if(currentCard ==myDeck.fatedCards[0]){
+              cardIcon.style.transform = "rotate(180deg) translateX(-25px)";
+            }
         }
         else{
             cardIcon.style.transform = "rotate(0deg)";
+            if(currentCard ==myDeck.fatedCards[1]){
+              cardIcon.style.transform ="rotate(270deg) translateY(-20px)";
+            }
+            if(currentCard ==myDeck.fatedCards[0]){
+              cardIcon.style.transform = "rotate(0deg) translateX(25px)";
+            }
         }
+        
         cardIcon.setAttribute('src',currentCard.imgPath);
+        cardIcon.setAttribute('title',currentCard.desc);
     }
     results.innerHTML = `
         <h1>Your Results</h1> 
